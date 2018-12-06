@@ -1,7 +1,6 @@
 package ai.preferred.regression.pe;
 
 import ai.preferred.regression.io.CSVInputData;
-import ai.preferred.regression.io.CSVUtils;
 import org.apache.commons.csv.CSVPrinter;
 import org.kohsuke.args4j.Option;
 import org.slf4j.Logger;
@@ -9,11 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
-public class AveragedColumn extends ProcessingElement {
+public class AverageCell extends ProcessingElement {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AveragedColumn.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AverageCell.class);
 
   @Option(name = "-c", aliases = {"--column"})
   private int column;
@@ -25,26 +23,28 @@ public class AveragedColumn extends ProcessingElement {
   protected void process(CSVInputData data, CSVPrinter printer) throws IOException {
     if (data.hasHeader()) {
       ArrayList<String> header = data.getHeader();
-      String colName = header.remove(column);
-      header.add(colName);
+      header.add(header.remove(column));
       printer.printRecord(header);
     }
 
     for (ArrayList<String> record : data) {
       double sum = 0.0;
-      int count = 0;
-      for (String e: record.get(column).split(delimiter)) {
-        sum += Double.parseDouble(e);
-        count += 1;
+      final String[] values = record.get(column).split(delimiter);
+      for (final String v : values) {
+        try {
+          sum += Double.parseDouble(v.trim());
+        } catch (NumberFormatException e) {
+          LOGGER.error("Unable to parse the number", e);
+        }
       }
       record.remove(column);
-      Collections.addAll(record, CSVUtils.toStringArray(sum/count));
+      record.add(String.valueOf(sum / values.length));
       printer.printRecord(record);
     }
   }
 
   public static void main(String[] args) {
-    parseArgsAndRun(AveragedColumn.class, args);
+    parseArgsAndRun(AverageCell.class, args);
   }
 
 }
