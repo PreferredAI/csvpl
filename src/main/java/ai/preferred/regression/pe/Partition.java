@@ -26,7 +26,7 @@ public class Partition extends ProcessingElement {
     }
 
     final ArrayList<ArrayList<String>> data = reader.getRecords();
-    final int n = (int)Math.round(percent * data.size());
+    final int n = (int) Math.round(percent * data.size());
 
     if (exclude) {
       printer.printRecords(data.subList(n, data.size()));

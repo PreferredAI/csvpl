@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.List;
 
 public class ProjectColumns extends ProcessingElement {
 
@@ -19,8 +18,8 @@ public class ProjectColumns extends ProcessingElement {
   @Option(name = "-c", aliases = {"--columns"}, usage = "the column names separated by spaces", handler = StringArrayOptionHandler.class, required = true)
   private String[] columns = new String[0];
 
-  private static SortedSet<Integer> indicesOf(ArrayList<String> header, String[] columns) {
-    final SortedSet<Integer> indices = new TreeSet<>();
+  private static List<Integer> indicesOf(ArrayList<String> header, String[] columns) {
+    final List<Integer> indices = new ArrayList<>(columns.length);
     for (final String name : columns) {
       int index = header.indexOf(name);
       if (index > -1) {
@@ -30,7 +29,7 @@ public class ProjectColumns extends ProcessingElement {
     return indices;
   }
 
-  private static <T> ArrayList<T> projectIndices(ArrayList<T> list, SortedSet<Integer> indices) {
+  private static <T> ArrayList<T> projectIndices(ArrayList<T> list, List<Integer> indices) {
     final ArrayList<T> projection = new ArrayList<>(indices.size());
     for (int index : indices) {
       projection.add(list.get(index));
@@ -45,7 +44,7 @@ public class ProjectColumns extends ProcessingElement {
     }
 
     final ArrayList<String> header = data.getHeader();
-    final SortedSet<Integer> indices = indicesOf(header, columns);
+    final List<Integer> indices = indicesOf(header, columns);
     printer.printRecord(projectIndices(header, indices));
 
     for (final ArrayList<String> record : data) {
