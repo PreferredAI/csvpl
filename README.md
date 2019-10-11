@@ -3,7 +3,7 @@ Your preferred data manipulation and analysis language for CSV (comma-separated 
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.preferred/csvpl/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.preferred/csvpl)
 [![Build Status](https://travis-ci.org/PreferredAI/csvpl.svg)](https://travis-ci.org/PreferredAI/csvpl)
-[![Coverage Status](https://coveralls.io/repos/github/PreferredAI/venom/csvpl.svg)](https://coveralls.io/github/PreferredAI/csvpl)
+[![Coverage Status](https://coveralls.io/repos/github/PreferredAI/csvpl/badge.svg)](https://coveralls.io/github/PreferredAI/csvpl)
 [![Javadoc](https://www.javadoc.io/badge/ai.preferred/csvpl.svg)](https://www.javadoc.io/doc/ai.preferred/csvpl)
 
 ## Overview
