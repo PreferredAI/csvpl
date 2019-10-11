@@ -1,0 +1,23 @@
+language: java
+jdk:
+- openjdk11
+cache:
+  directories:
+    - ~/.m2/repository
+
+before_install:  mvn versions:resolve-ranges
+
+install: mvn -s .mvn.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+
+script: mvn clean test jacoco:report coveralls:report
+
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_a3af7f3d4f29_key -iv $encrypted_a3af7f3d4f29_iv -in key.gpg.enc -out key.gpg -d
+- gpg --import key.gpg
+
+deploy:
+  provider: script
+  script: mvn clean deploy -s .mvn.xml -DskipTests=true -B -U -P release
+  skip_cleanup: true
+  on:
+    tags: true
