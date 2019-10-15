@@ -34,11 +34,11 @@ If you already have a project then just add CSVPL as a dependency to your pom.xm
     <!-- CSVPL: Your preferred data analysis language for CSV @ https://github.com/PreferredAI/csvpl -->
     <groupId>ai.preferred</groupId>
     <artifactId>csvpl</artifactId>
-    <version>1.0.1</version>
+    <version>1.0</version>
 </dependency>
 ```
 
 ## License
 
-[Apache License 2.0](LICENSE)
+[GNU GENERAL PUBLIC LICENSE 3.0](LICENSE)
 
